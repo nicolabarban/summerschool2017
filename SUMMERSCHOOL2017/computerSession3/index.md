@@ -1,37 +1,44 @@
 # Computer Session 3: Descriptive Statistics, Quality Control and Association Analysis 
 ##[Oxford NCRM Summer School](http://www.oxfordsociogenetics.com):
-###An introduction to combining social science and molecular genetic research
+### An introduction to combining social science and molecular genetic research
  
 
 nicola.barban@nuffield.ox.ac.uk
-![Ox](/images/ox_brand_special_pos.png)
+
+![Ox](images/ox_brand1_rev_rect.gif)
 
 ---
 
 # Outline
-1. Work with Plink Binary files
-2. bla
-3. bla bla bla
+## In this computer lab we will learn how to ... 
+1. Open and work with Plink Binary files
+2. Derive information on Allele frequencies and missing values
+3. Recode a plink file in other formats
+4. Select information on particular markers or on a subsample of individuals
+5. Attach a phenotype to a plink file
+6. Do quality control
+7. Run association analysis
+8. Run a Genome-Wide Association Analysis
 
 
 ---
 
 
 # Opening a plink file
-Let's start by opening a plink binary file. 
-You can find the example files in the `/data` folder.
+* Let's start by opening a plink binary file. 
+* You can find the example files in the `/data` folder.
 
-We are going to use the data from HapMap3 (release 2)  - NCBI Build 36. In particular, we are using the CEU population, i.e. Utah residents with Northern and Western European ancestry. More information on Hapmap available  [here](http://www.sanger.ac.uk/resources/downloads/human/hapmap3.html).
+* We are going to use the data from HapMap3 (release 2)  - NCBI Build 36. In particular, we are using the CEU population, i.e. Utah residents with Northern and Western European ancestry. More information on Hapmap available  [here](http://www.sanger.ac.uk/resources/downloads/human/hapmap3.html).
 
-Data come from the [Center for Statistical Genetics, University of Michigan]http://csg.sph.umich.edu/abecasis/mach/download/HapMap3.r2.b36.html
+* Data come from the [Center for Statistical Genetics, University of Michigan]http://csg.sph.umich.edu/abecasis/mach/download/HapMap3.r2.b36.html
 
 ```
 ./plink --bfile ../data/hapmap3-r2_b36_CEU
 ```
 
-The `--file` option expects that there will be suitable ped/map files with the given base name. So in the above example, there must be files `hapmap.ped ` and `hapmap.map`
+* The `--file` option expects that there will be suitable ped/map files with the given base name. So in the above example, there must be files `hapmap.ped ` and `hapmap.map`
 
-Plink will typically output files to disk. If you don’t specify an output name, it will use the name plink. In this case, a file called `plink.log` is created. You can change the basename with the `--out` option
+* Plink will typically output files to disk. If you don’t specify an output name, it will use the name plink. In this case, a file called `plink.log` is created. You can change the basename with the `--out` option
 ---
 
 # Deriving allele frequencies
@@ -61,8 +68,10 @@ Total genotyping rate is 0.996191.
 
 ```
 ---
+# Allele Frequencies
 
-
+* Let's have a look at the output file `plink.frq` using the unix command `k`
+* Note that not all the markers are *measured* in all individuals
 
 ```
 head plink.frq
@@ -82,7 +91,7 @@ head plink.frq
 ---
 
 # Recoding
- Data can be transformed into other formats .
+* Data can be transformed into other formats
 
 ```
 head ../data/hapmap3-r2_b36_CEU.bim
@@ -96,8 +105,12 @@ head ../data/hapmap3-r2_b36_CEU.bim
 1	rs3131967	0	744197	T	C
 1	rs1048488	0	750775	C	T
 1	rs3115850	0	751010	T	C
+```
 
-plink --bfile ../data/hapmap3-r2_b36_CEU --recode --allele1234  --make-bed --out ../data/recodedHapmap
+```
+plink 	--bfile ../data/hapmap3-r2_b36_CEU /
+	 	--recode --allele1234 /
+		--make-bed --out ../data/recodedHapmap
 
 head ../data/recodedHapmap.bim
 1	rs6650104	0	554340	3	1
@@ -115,14 +128,23 @@ head ../data/recodedHapmap.bim
 ---
 
 # FTO snps
-![alt text](/images/FTO.png)
-[Source]https://www.snpedia.com/index.php/FTO
+[Source](https://www.snpedia.com/index.php/FTO)
+![alt text](images/FTO.png)
+
 
 ---
-### Extracting only entries for particular SNPs
-```
-plink --bfile ../data/hapmap3-r2_b36_CEU --snps  rs9930506 --recode --out  rs9930506sample
+# Extracting only entries for particular SNPs
 
+We may want to extract only information from a particular SNP (or a list of snps)
+
+```
+plink 	--bfile ../data/hapmap3-r2_b36_CEU /
+		--snps  rs9930506 /
+		--recode /
+		--out  rs9930506sample
+```
+
+```
 head rs9930506sample.ped
 1328 NA06989 0 0 2 -9 G A
 1377 NA11891 0 0 1 -9 G A
@@ -136,14 +158,20 @@ head rs9930506sample.ped
 13291 NA06986 0 0 1 -9 G A
 
 ```
+---
 
+# Extracting named individuals. 
 
-### Extracting named individuals. 
-The `--keep` option can be used to select individuals from the sample.
-The `--exclude` option does the inverse
-```{bash}
+### Or we may want to selects a subsample of individuals.
 
-plink --bfile ../data/hapmap3-r2_b36_CEU --keep list.txt --make-bed --out  selectedIndividuals
+* The `--keep` option can be used to select individuals from the sample.
+* The `--exclude` option does the inverse
+
+```
+
+plink 	--bfile ../data/hapmap3-r2_b36_CEU /
+		--keep list.txt /
+		--make-bed --out  selectedIndividuals
 
 PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
 (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
@@ -171,11 +199,21 @@ selectedIndividuals.fam ... done.
 ---
 
 
-### Phenotypes
+# Phenotypes
+
+* So far, we have not attached any **phenotype** to the plink genotype data. 
+* We can specify a phenotype from an external file. 
+
+
 ```
-plink --bfile ../data/hapmap3-r2_b36_CEU --pheno ../data/EA.phen --make-bed --out ../data/hapmap_EA
-head   ../data/hapmap_EA.fam
-```
+plink 	--bfile ../data/hapmap3-r2_b36_CEU /
+	 	--pheno ../data/EA.phen /
+		--make-bed --out ../data/hapmap_EA /
+		
+		```
+
+* Using the file `EA.phen`, we can attach the phenotype **Educational Attianment** to the HapMap genotype. 
+* Note that this phenotype is simulated
 
 ```
 head   ../data/hapmap_EA.fam
@@ -194,6 +232,10 @@ head   ../data/hapmap_EA.fam
 ---
 
 # Missing values
+
+* We can calculate missing values, i.e. How many genetic marker are missing for each individual and on how many individuals a marker is measured
+
+
 ```
 plink --bfile hapmap_EA --missing
 
@@ -213,7 +255,12 @@ head plink.imiss
 
 
 # Hardy-Weinberg Equilibrium
-```{bash}
+From [Nature Education](https://www.nature.com/scitable/definition/hardy-weinberg-equilibrium-122)
+
+> "The Hardy-Weinberg equilibrium is a principle stating that the genetic variation in a population will remain constant from one generation to the next in the absence of disturbing factors. When mating is random in a large population with no disruptive circumstances, the law predicts that both genotype and allele frequencies will remain constant because they are in equilibrium." 
+
+
+```
 plink --bfile hapmap_EA --hardy
 head plink.hwe
  CHR                           SNP     TEST   A1   A2                 GENO   O(HET)   E(HET)            P 
@@ -232,6 +279,7 @@ head plink.hwe
 ---
 
 # Quality control
+**Quality control is a stanard procedure that filters out SNPs with low quality**
 
 *  `--mind` excludes individuals with missing genotype data above the given rate
 *  `--geno` option remove SNPs tha have less than the specified call rate
@@ -254,7 +302,32 @@ plink		--bfile ../data/hapmap_EA \
 
 # Other filters
 
- plink --bfile hapmap_EA_qc --filter-females --make-bed
+Plink has other filters implemented:
+
+
+*            `--filter-controls` 
+Filter controls with a binary phenotype
+
+*          ` --filter-males` 
+Keep only males (based on genotype data)
+
+*          `--filter-females` 
+Keep only females (based on genotype data)
+
+*         `--filter-founders` 
+Keep only founders (i.e. no parental IDs present)
+
+*         `--filter-nonfounders`
+
+
+
+```
+ plink 	--bfile hapmap_EA_qc \
+ 		--filter-females \
+		--make-bed
+ 
+ 
+ 
 PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
 (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
 Logging to plink.log.
@@ -262,7 +335,8 @@ Options in effect:
   --bfile hapmap_EA_qc
   --filter-females
   --make-bed
-
+  
+  
 16384 MB RAM detected; reserving 8192 MB for main workspace.
 1352473 variants loaded from .bim file.
 165 people (80 males, 85 females) loaded from .fam.
@@ -275,13 +349,47 @@ Total genotyping rate in remaining samples is 0.996233.
 1352473 variants and 85 people pass filters and QC.
 Phenotype data is quantitative.
 --make-bed to plink.bed + plink.bim + plink.fam ... done.
+```
 ---
 
 
 # Association testing
+Finally, we can test the association between a genotype and a phenotype.
+
+
+### Quantitative trait association
+
 
 ```
- plink --bfile hapmap_EA_qc --snps rs2883059 --assoc --out EArs2883059_assoc
+plink 	--bfile hapmap_EA_qc \
+ 		--snps rs2883059 \
+		--assoc \
+		--out EArs2883059
+		
+```		
+ --assoc writes the results of a 1df chi-square allelic test 
+ 
+ with fields as follows:
+```
+      CHR      Chromosome number
+      SNP      SNP identifier
+      BP       Physical position (base-pair)
+      NMISS    Number of non-missing genotypes
+      BETA     Regression coefficient
+      SE       Standard error
+      R2       Regression r-squared
+      T        Wald test (based on t-distribtion)
+      P        Wald test asymptotic p-value
+```
+---
+
+# Association Results
+
+```
+plink 	--bfile hapmap_EA_qc \
+ 		--snps rs2883059 \
+		--assoc \
+		--out EArs2883059
 
  head  EArs2883059_assoc.qassoc
  CHR         SNP         BP    NMISS       BETA         SE         R2        T            P 
@@ -291,10 +399,14 @@ Phenotype data is quantitative.
 ```
 ---
 
+
 # Genome-wide association
 
+Given a quantitative phenotype and possibly some **covariates** (in a `--covar` file), `--linear` writes a linear regression report to `plink.assoc.linear`. Similarly, `--logistic` performs logistic regression given a case/control phenotype and some covariates.
+
+
 ```
- plink --bfile hapmap_EA_qc  --assoc --out genome_wide_assoc
+ plink --bfile hapmap_EA_qc  --linear --out genome_wide_assoc
 
  head  genome_wide_assoc.qassoc
  CHR                           SNP         BP    NMISS       BETA         SE         R2        T            P 
@@ -312,10 +424,28 @@ Phenotype data is quantitative.
 ```
 ---
 
+# More on Association results
+
+
+* Plink can perform many different types of association analysis. 
+* You can find extensive documentation [here](https://www.cog-genomics.org/plink/1.9/assoc)
+* Types of association analysis
+	* Linear, logistic regression
+	* Stratified case/control analyses
+	* Dosage data
+	* LASSO regression
+	* Linear mixed model association
+	* Within-family Analysis
+	
+---
 
 # LD between two SNPs
 
-```bash
+* Plink can be also used to check the *correlation* between two markers. 
+* The command `--ld` inspects the relation between a single pair of variants in more detail,  which displays observed and expected (based on MAFs) frequencies of each haplotype, as well as haplotype-based r2 and D'.
+
+
+```
 
  plink --bfile hapmap_EA_qc  --ld rs2883059 rs2777888
  
@@ -335,7 +465,11 @@ Phenotype data is quantitative.
 ---
 
 # Make relationship matrix
-```bash
+
+Plink can also calculate **genetic similarity** calculating a relationship matrix similarly to GCTA.
+
+
+```
  plink --bfile hapmap_EA_qc  --make-rel 
  
  
@@ -352,11 +486,3 @@ Phenotype data is quantitative.
  
 ```
 ---
-
-Display:
-```mathjax
-x = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a}
-```
-
-Inline: `$a^2 + b^2 = c^2$`.  AFAICT, there is no way to write a literal starting and ending in dollars that won't be interpreted as math.
-
