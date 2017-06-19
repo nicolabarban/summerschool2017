@@ -1,5 +1,5 @@
 # Computer Session 3: Descriptive Statistics, Quality Control and Association Analysis 
-##[Oxford NCRM Summer School](http://www.oxfordsociogenetics.com):
+## [Oxford NCRM Summer School](http://www.oxfordsociogenetics.com):
 ### An introduction to combining social science and molecular genetic research
  
 
