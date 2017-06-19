@@ -197,20 +197,17 @@ selectedIndividuals.fam ... done.
 
 ```
 ---
-
-
 # Phenotypes
 
 * So far, we have not attached any **phenotype** to the plink genotype data. 
 * We can specify a phenotype from an external file. 
-
 
 ```
 plink 	--bfile ../data/hapmap3-r2_b36_CEU /
 	 	--pheno ../data/EA.phen /
 		--make-bed --out ../data/hapmap_EA /
 		
-		```
+```
 
 * Using the file `EA.phen`, we can attach the phenotype **Educational Attianment** to the HapMap genotype. 
 * Note that this phenotype is simulated
@@ -229,6 +226,7 @@ head   ../data/hapmap_EA.fam
 13291 NA06986 0 0 1 3.42843
 
 ```
+
 ---
 
 # Missing values
@@ -273,7 +271,6 @@ head plink.hwe
    1                     rs3131969  ALL(QT)    A    G              2/26/84   0.2321    0.232            1
    1                     rs3131967  ALL(QT)    T    C              2/22/87   0.1982   0.2068       0.6402
    1                     rs1048488  ALL(QT)    C    T              2/33/76   0.2973   0.2778       0.7324
-
 
 ```
 ---
@@ -367,7 +364,7 @@ plink 	--bfile hapmap_EA_qc \
 		--out EArs2883059
 		
 ```		
- --assoc writes the results of a 1df chi-square allelic test 
+ `--assoc` writes the results of a 1df chi-square allelic test 
  
  with fields as follows:
 ```
