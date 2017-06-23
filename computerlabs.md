@@ -17,13 +17,13 @@ More information about the summer school can be found at: [http://oxfordsociogen
 * Computer session 2:  Introduction to genetic data and programmes, focus on PLINK [slides](computerSession2/Session2_Slides.pdf); [data](computerSession2/Session2_data.zip)
 
 ### Day 2
-* Computer session 3: Descriptive Statistics, Quality Control and Association Analysis [slides](computerSession3/slides3.html); [Notes](computerSession3/index.md); [data](computerSession3/data3.zip)
+* Computer session 3: Descriptive Statistics, Quality Control and Association Analysis [slides](computerSession3/slides3.html); [Notes](computerSession3/index.md); [data](https://www.dropbox.com/s/5jaasm3vbtli23x/data3.zip?dl=0)
 
 * Computer session 4: Calculation and use of polygenic scores [slides](computerSession4/slides4.html); [notes](computerSession4/index4.md); [data](https://www.dropbox.com/s/vpytuz3ced3dfch/data4.zip?dl=0)
 
 
 ### Day 3 
-* Computer Session 5: Heritability estimates using GCTA  [slides](computerSession5/Session5_Slides.pdf); [data](https://www.dropbox.com/s/5jaasm3vbtli23x/data3.zip?dl=0); 
+* Computer Session 5: Heritability estimates using GCTA  [slides](computerSession5/Session5_Slides.pdf); [data](); 
 
 
 ### Day 4
