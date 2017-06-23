@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+
+
+# Computer Session 8:   GxE interaction using polygenic scores and general Q&A for computer sessions
+##[Oxford NCRM Summer School](http://www.oxfordsociogenetics.com):
+### An introduction to combining social science and molecular genetic research
+ 
+
+nicola.barban@nuffield.ox.ac.uk & felix.tropf@sociology.ox.ac.uk
+
+![Ox](images/ox_brand1_rev_rect.gif)
+
+---
+# Install packages and read data
+
+```R
+
+install.packages(c("interplot", "foreign", "ggplot2"), dependencies=T)
+library(foreign)
+library(interplot)
+library(ggplot2)
+
+mydata <- read.dta("../data/GxEdata.dta")
+
+head(mydata)
+
+```
+---
+
+
+# A polygenic score for height
+```R
+
+summary(mydata$height)
+hist(mydata$height)
+```
+
+Let's run a regression model in R
+```R
+
+model_height <- lm(height ~ score_height, data = mydata)
+summary(model_height)
+
+```
+![img](images/plot1.png)
+---
+
+#  Visualize the polygenic score
+
+look at the association between height and its polygenic score
+
+
+
+```R
+ggplot(mydata, aes(x=score_height ,y=height, col=gender))   + 
+  					geom_point(alpha = 0.4) + ylim(.93,2.2) +
+   				 	stat_smooth(method = "lm", col = "black") 
+```
+ 
+By gender 
+```R
+ggplot(mydata, aes(x=score_height ,y=height, col=gender))   + 
+				geom_point(alpha = 0.4) + ylim(.93,2.2) +
+				geom_smooth(method="lm", fill=NA)
+
+```
+---
+
+# A model with Gene-Environment interactions
+
+* Let's try to estimate a GxE model
+```R
+
+model_heightXbirthyear <- lm(height ~ 	score_height +
+	 									byear +
+										score_height*byear,
+										 data = mydata)
+summary(model_heightXbirthyear)
+
+```
+
+* the interaction term is not statistically different from 0
+
+* Let's try to visualize if the association between height and PGS changes in two different "big" cohorts.
+
+```R
+table(mydata$byear_dum)
+theme_set(theme_bw())
+ggplot(mydata, aes(x = score_height, y = height, color = byear_dum, shape = byear_dum)) + 
+  stat_smooth(method = 'lm') +
+  xlab("Genetic score for Height") +
+  ylab("Height") +
+  ggtitle("GxE interaction between polygenic score for Height and birth cohort") +
+  theme(plot.title = element_text(face="bold")) 
+
+```
+---
+
+# Our first GxE interaction plot
+![Ox](images/interaction1.png)
+
+* No interactions between birth cohort and genetics of height
+
+---
+
+# GxE in educational attainment
+
+```R
+
+model_edu <- lm(educyears ~ score_educ, data = mydata)
+summary(model_edu)
+
+model_eduXbirthyear <- lm(educyears ~ score_educ + byear + score_educ*byear, data = mydata)
+summary(model_eduXbirthyear)
+```
+
+Output:
+```R
+Call:
+lm(formula = educyears ~ score_educ + byear + score_educ * byear, 
+    data = mydata)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-13.902  -1.295  -0.038   1.986   6.948 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(>|t|)    
+(Intercept)      -40.40701   14.08334  -2.869 0.004131 ** 
+score_educ        35.21685   14.81899   2.376 0.017513 *  
+byear              0.02728    0.00727   3.752 0.000177 ***
+score_educ:byear  -0.01774    0.00765  -2.319 0.020447 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+```
+---
+
+
+# GxE interaction
+
+```R
+interplot(m = model_eduXbirthyear, var1 = "byear", var2 = "score_educ") +
+  xlab("Year born") +
+ ylab("Estimated Coefficient for Education genetic score") +
+ theme_bw() +
+  ggtitle("GxE interaction between PGS for EA and birth cohort") +
+  theme(plot.title = element_text(face="bold")) 
+  
+```
+![img](images/ea_inter1.png)
+
+---
+
+# Let's try with two cohorts
+
+```R
+  png("images/ea_inter2.png")
+theme_set(theme_bw())
+ggplot(mydata, aes(x = score_educ, y = educyears, color = byear_dum, shape = byear_dum)) + 
+  stat_smooth(method = 'lm') +
+  xlab("Genetic score for EA") +
+  ylab("Educational Attainment") +
+  ggtitle("GxE interaction between polygenic score for EA and birth cohort") +
+  theme(plot.title = element_text(face="bold")) 
+dev.off()
+
+
+```
+![img](images/ea_inter2.png)
+
+
+---
+
+# BMI
+
+```R
+
+model_bmi <- lm(bmi ~ score_bmi, data = mydata)
+summary(model_bmi)
+
+model_bmiXbirthyear <- lm(bmi ~ score_bmi + byear + score_bmi*byear, data = mydata)
+summary(model_bmiXbirthyear)
+```
+
+Let's look at the results:
+
+```R
+> summary(model_bmiXbirthyear)
+
+Call:
+lm(formula = bmi ~ score_bmi + byear + score_bmi * byear, data = mydata)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-13.360  -3.297  -0.647   2.459  73.177 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(>|t|)   
+(Intercept)      36.937497  22.970770   1.608  0.10789   
+score_bmi       -66.909813  23.501151  -2.847  0.00443 **
+byear            -0.005105   0.011858  -0.431  0.66683   
+score_bmi:byear   0.035113   0.012130   2.895  0.00381 **
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 4.86 on 5613 degrees of freedom
+Multiple R-squared:  0.05101,	Adjusted R-squared:  0.05051 
+F-statistic: 100.6 on 3 and 5613 DF,  p-value: < 2.2e-16
+
+
+
+
+```
+
+---
+#  Interaction plot
+
+```R
+#png("images/bmi_inter1.png")
+interplot(m = model_bmiXbirthyear, var1 = "byear", var2 = "score_bmi") +
+  xlab("Year born") +
+ ylab("Estimated Coefficient for BMI genetic score") +
+ theme_bw() +
+  ggtitle("GxE interaction between PGS for BMI and birth cohort") +
+  theme(plot.title = element_text(face="bold")) 
+#dev.off()
+
+```
+![img](images/bmi_inter1.png)
+
+
+---
+
+# Comparison of two cohorts
+```R
+
+ png("images/bmi_inter2.png")
+  
+theme_set(theme_bw())
+ggplot(mydata, aes(x = score_bmi, y = educyears, color = byear_dum, shape = byear_dum)) + 
+  stat_smooth(method = 'lm') +
+  xlab("Genetic score for BMI") +
+  ylab("Educational Attainment") +
+  ggtitle("GxE interaction between polygenic score for BMI and birth cohort") +
+  theme(plot.title = element_text(face="bold")) 
+ dev.off()  
+
+
+```
+![img](images/bmi_inter2.png)
+---
+
+# Q & A session
+
+* question 1?
+* question 2?
+* question 3?
+* question 4?
+
+---
+
+# Final Remarks
+* All the data are available here:
+* All the software and scripts.. bla bla bla
+
+---
+
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+		var slideshow = remark.create({
+		  highlightLanguage: 'bash',
+		  highlightStyle: 'monokai',
+		});
+    </script>
+  </body>
+</html>
