@@ -36,13 +36,13 @@ nicola.barban@nuffield.ox.ac.uk & felix.tropf@sociology.ox.ac.uk
 # Install packages and read data
 
 ```R
-
+R
 install.packages(c("interplot", "foreign", "ggplot2"), dependencies=T)
 library(foreign)
 library(interplot)
 library(ggplot2)
 
-mydata <- read.dta("../data/GxEdata.dta")
+mydata <- read.dta("data/GxEdata.dta")
 
 head(mydata)
 
@@ -239,14 +239,13 @@ F-statistic: 100.6 on 3 and 5613 DF,  p-value: < 2.2e-16
 #  Interaction plot
 
 ```R
-#png("images/bmi_inter1.png")
 interplot(m = model_bmiXbirthyear, var1 = "byear", var2 = "score_bmi") +
   xlab("Year born") +
  ylab("Estimated Coefficient for BMI genetic score") +
  theme_bw() +
   ggtitle("GxE interaction between PGS for BMI and birth cohort") +
   theme(plot.title = element_text(face="bold")) 
-#dev.off()
+
 
 ```
 ![img](images/bmi_inter1.png)
@@ -257,7 +256,6 @@ interplot(m = model_bmiXbirthyear, var1 = "byear", var2 = "score_bmi") +
 # Comparison of two cohorts
 ```R
 
- png("images/bmi_inter2.png")
   
 theme_set(theme_bw())
 ggplot(mydata, aes(x = score_bmi, y = educyears, color = byear_dum, shape = byear_dum)) + 
@@ -266,7 +264,6 @@ ggplot(mydata, aes(x = score_bmi, y = educyears, color = byear_dum, shape = byea
   ylab("Educational Attainment") +
   ggtitle("GxE interaction between polygenic score for BMI and birth cohort") +
   theme(plot.title = element_text(face="bold")) 
- dev.off()  
 
 
 ```
@@ -275,19 +272,22 @@ ggplot(mydata, aes(x = score_bmi, y = educyears, color = byear_dum, shape = byea
 
 # Q & A session
 
-* question 1?
-* question 2?
-* question 3?
-* question 4?
-
+<img src=images/QA.png  width="750">
 ---
 
 # Final Remarks
-* All the data are available here:
-* All the software and scripts.. bla bla bla
+* All the data and software are available [here](../data.md) 
+* All the slides and  scripts are available [here](../computerlabs.md) 
 
 ---
 
+
+## Thanks
+nicola.barban@nuffield.ox.ac.uk
+
+![Ox](images/ox_brand1_rev_rect.gif)
+
+---
 
     </textarea>
     <script src="https://remarkjs.com/downloads/remark-latest.min.js">

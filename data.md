@@ -8,31 +8,22 @@
  
 More information about the summer school can be found at: [http://oxfordsociogenetics.com](http://oxfordsociogenetics.com)
 
+## Software
 
+* [Plink for Linux](plink_linux_x86_64.zip)
+* [Plink for Mac](plink_mac.zip)
 
-## Computer labs
+## Data
 ---
 
-### Day 1
-* Computer session 1:  An introduction to the command line  [github](https://github.com/crahal/Teaching/tree/master/AnIntroductionToTheCommandLine)
-* Computer session 2:  Introduction to genetic data and programmes, focus on PLINK  [data](computerSession2/Session2_data.zip)
-
-### Day 2
-* Computer session 3: Descriptive Statistics, Quality Control and Association Analysis  [data](computerSession3/data3.zip)
-
-* Computer session 4: Calculation and use of polygenic scores  [data](computerSession4/data4.zip)
-
-
-### Day 3 
-* Computer Session 5: Heritability estimates using GCTA  [data](computerSession5/Session5_data.zip); 
-
-
-### Day 4
-* Computer session 6: An introduction to Mendelian Randomisation 
-* Computer Session 7: Heritability estimates using GCTA 
-### Day 5
-
-* Computer session 8: GxE interaction using polygenic scores and general Q&A for computer sessions  [data](computerSession8/data8.zip)
+* Computer session 1: [data](https://github.com/crahal/Teaching/tree/master/AnIntroductionToTheCommandLine)
+* Computer session 2: [data](computerSession2/Session2_data.zip)
+* Computer session 3: [data](computerSession3/data3.zip)
+* Computer session 4: [data](computerSession4/data4.zip)
+* Computer Session 5: [data](computerSession5/Session5_data.zip); 
+* Computer session 6: 
+* Computer Session 7: [data](https://www.dropbox.com/s/klk8zj9vmpzoeee/data7.zip?dl=0)
+* Computer session 8: [data](https://www.dropbox.com/s/qtvfl4q1ggd6j0z/data8.zip?dl=0)
 
 
 ---

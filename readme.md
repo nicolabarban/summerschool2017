@@ -14,7 +14,7 @@ More information about the summer school can be found at: [http://oxfordsociogen
 * [Program](NCRMSociogenomicsSummerSchool2017.pdf) 
 * [Lectures](lectures.md)
 * [Computer Labs](computerlabs.md)
-* [Data](data.md) 
+* [Data and Software](data.md) 
 * [How to set up the virtual computer box](ConfiguringTheCommandLine.pdf) 
 
 
