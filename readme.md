@@ -23,8 +23,6 @@ The Summer School is supported by the Department of Sociology, University of Oxf
 
 <img src=images/ESRC.png width="300"><img src=images/ncrm_logo@2x.png width="300">
 
-
-
 ![pic from website](http://oxfordsociogenetics.com/wp-content/uploads/2016/06/BRPhoto_ECSROxford_23.09.16-4-copy.jpg)
 
 
