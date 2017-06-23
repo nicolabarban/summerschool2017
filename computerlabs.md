@@ -28,7 +28,7 @@ More information about the summer school can be found at: [http://oxfordsociogen
 
 ### Day 4
 * Computer session 6: An introduction to Mendelian Randomisation [slides](computerSession6/slides6.pdf)
-* Computer Session 7: Heritability estimates using GCTA [slides](computerSession7/slides7.html);  [Notes](computerSession7/index7.md);  [Notes](computerSession7/data7.zip)
+* Computer Session 7: Heritability estimates using GCTA [slides](computerSession7/slides7.html);  [Notes](computerSession7/index7.md);  [Notes](https://www.dropbox.com/s/klk8zj9vmpzoeee/data7.zip?dl=0)
 
 ### Day 5
 
